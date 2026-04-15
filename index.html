@@ -1,111 +1,261 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>云宠牧场—萌宠认养数字化平台</title>
-<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif;}
-body{background:#0a1a33;color:#fff;overflow-x:hidden;}
-.header{height:60px;background:#08142b;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid #1a2a4a;}
-.logo{font-size:20px;font-weight:bold;color:#00ccff;}
-.role{font-size:12px;color:#999;margin-left:10px;}
-.container{padding:20px;max-width:1600px;margin:0 auto;}
-.panel{background:#0f2040;border-radius:8px;padding:15px;margin-bottom:20px;border:1px solid #1a2a4a;}
-.grid-stat{display:grid;grid-template-columns:repeat(6,1fr);gap:15px;margin-bottom:20px;}
-.card{background:#14284a;border-radius:8px;padding:20px;text-align:center;border:1px solid #1a2a4a;}
-.card .label{font-size:14px;color:#ccc;margin-bottom:10px;}
-.card .num{font-size:24px;font-weight:bold;color:#00ccff;}
-.row{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:20px;}
-.chart-box{height:250px;}
-.trace-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;height:250px;}
-.trace-grid img{width:100%;height:100%;object-fit:cover;border-radius:4px;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>云宠牧场-智慧大屏</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #0a1a33;
+      color: #fff;
+      font-family: "Microsoft YaHei", sans-serif;
+      overflow-x: hidden;
+    }
+    .header {
+      height: 60px;
+      background: #08142b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      border-bottom: 1px solid #1a2a4a;
+    }
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: #00ccff;
+    }
+    .role {
+      font-size: 12px;
+      color: #999;
+      margin-left: 10px;
+    }
+    .user-info {
+      font-size: 14px;
+      color: #ccc;
+    }
+    .container {
+      display: flex;
+    }
+    .sidebar {
+      width: 180px;
+      background: #08142b;
+      height: calc(100vh - 60px);
+      border-right: 1px solid #1a2a4a;
+      padding-top: 10px;
+    }
+    .sidebar a {
+      display: block;
+      color: #ccc;
+      padding: 12px 20px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .sidebar a:hover {
+      background: #14284a;
+      color: #00ccff;
+    }
+    .main {
+      flex: 1;
+      padding: 20px;
+    }
+    .title {
+      text-align: center;
+      font-size: 22px;
+      color: #00ccff;
+      margin-bottom: 20px;
+    }
+    .section {
+      background: #0f2040;
+      border: 1px solid #1a2a4a;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .section h2 {
+      font-size: 16px;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 15px;
+    }
+    .card {
+      background: #14284a;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px;
+    }
+    .card .label {
+      font-size: 14px;
+      color: #ccc;
+      margin-bottom: 8px;
+    }
+    .card .value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #00ccff;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .chart {
+      width: 100%;
+      height: 260px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #14284a;
+    }
+    th, td {
+      border: 1px solid #1a2a4a;
+      padding: 10px;
+      text-align: center;
+      font-size: 13px;
+    }
+    .imgs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .imgs img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 4px;
+      background: #14284a;
+    }
+  </style>
 </head>
 <body>
+
 <div class="header">
-  <div class="logo">云宠牧场 <span class="role">管理员后台</span></div>
-  <div>超级管理员（管理员） <button style="background:#ff4d4f;color:#fff;border:none;padding:5px 10px;border-radius:4px;">退出登录</button></div>
+  <div>
+    <span class="logo">云宠牧场</span>
+    <span class="role">管理员后台</span>
+  </div>
+  <div class="user-info">超级管理员</div>
 </div>
+
 <div class="container">
-  <h2 style="color:#00ccff;margin-bottom:20px;">云宠牧场-智慧乡村萌宠认养数字化服务监管大屏</h2>
-  <div class="panel">
-    <h3 style="margin-bottom:15px;color:#fff;">📊 核心运营指标总览</h3>
-    <div class="grid-stat">
-      <div class="card"><div class="label">累计注册用户</div><div class="num">628</div></div>
-      <div class="card"><div class="label">累计认养订单</div><div class="num">586</div></div>
-      <div class="card"><div class="label">合作养殖农户</div><div class="num">5</div></div>
-      <div class="card"><div class="label">农户年均增收</div><div class="num">1.2W+</div></div>
-      <div class="card"><div class="label">平台总营收</div><div class="num">3.2W</div></div>
-      <div class="card"><div class="label">溯源图片待审核</div><div class="num">26</div></div>
-    </div>
+  <div class="sidebar">
+    <a href="#">数据大屏看板</a>
+    <a href="#">小程序用户监控</a>
+    <a href="#">合作农户管理</a>
+    <a href="#">养殖图片审核</a>
+    <a href="#">认养订单管理</a>
   </div>
-  <div class="row">
-    <div class="panel">
-      <h3 style="margin-bottom:15px;color:#fff;">📈 业务增长趋势分析</h3>
-      <div id="lineChart" class="chart-box"></div>
-    </div>
-    <div class="panel">
-      <div id="pieChart" class="chart-box"></div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="panel">
-      <h3 style="margin-bottom:15px;color:#fff;">💰 营收结构 & 全流程实拍溯源</h3>
-      <div id="incomeChart" class="chart-box"></div>
-    </div>
-    <div class="panel">
-      <div class="trace-grid">
-        <img src="https://via.placeholder.com/300x200?text=养殖场景" alt="养殖场景" />
-        <img src="https://via.placeholder.com/300x200?text=鸡舍内部" alt="鸡舍内部" />
-        <img src="https://via.placeholder.com/300x200?text=鸡蛋分拣" alt="鸡蛋分拣" />
-        <img src="https://via.placeholder.com/300x200?text=人工分拣" alt="人工分拣" />
+
+  <div class="main">
+    <h1 class="title">云宠牧场-智慧乡村萌宠认养数字化监管大屏</h1>
+
+    <div class="section">
+      <h2>📊 核心运营指标总览</h2>
+      <div class="grid">
+        <div class="card"><div class="label">累计注册用户</div><div class="value">628</div></div>
+        <div class="card"><div class="label">累计认养订单</div><div class="value">586</div></div>
+        <div class="card"><div class="label">合作养殖农户</div><div class="value">5</div></div>
+        <div class="card"><div class="label">农户年均增收</div><div class="value">1.2W+</div></div>
+        <div class="card"><div class="label">平台总营收</div><div class="value">3.2W</div></div>
+        <div class="card"><div class="label">待审核图片</div><div class="value">26</div></div>
       </div>
     </div>
+
+    <div class="row">
+      <div class="section">
+        <h2>📈 业务增长趋势分析</h2>
+        <div id="trend" class="chart"></div>
+      </div>
+      <div class="section">
+        <h2>🥚 认养品类占比</h2>
+        <div id="pie" class="chart"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="section">
+        <h2>💰 营收结构分析</h2>
+        <div id="income" class="chart"></div>
+      </div>
+      <div class="section">
+        <h2>📷 全流程溯源实拍</h2>
+        <div class="imgs">
+          <img src="https://via.placeholder.com/300x200?text=养殖场景">
+          <img src="https://via.placeholder.com/300x200?text=鸡舍内部">
+          <img src="https://via.placeholder.com/300x200?text=鸡蛋分拣">
+          <img src="https://via.placeholder.com/300x200?text=人工分拣">
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>🚨 实时运营动态 & 风险预警</h2>
+      <table>
+        <tr><th>时间</th><th>详情</th><th>类型</th></tr>
+        <tr><td>08:20</td><td>小程序新增注册用户12人</td><td>用户新增</td></tr>
+        <tr><td>09:15</td><td>农户上传溯源实拍图26张</td><td>溯源审核</td></tr>
+        <tr><td>10:40</td><td>新增认养订单8单，营收+420元</td><td>订单成交</td></tr>
+        <tr><td>13:30</td><td>今日捡蛋入库3200枚</td><td>产线数据</td></tr>
+        <tr><td>14:30</td><td>生成溯源档案10份</td><td>合规存证</td></tr>
+      </table>
+    </div>
   </div>
 </div>
+
 <script>
-// 1. 业务增长折线图（完全还原原图）
-const lineChart = echarts.init(document.getElementById("lineChart"))
-lineChart.setOption({
-  tooltip: { trigger: "axis" },
-  legend: { data: ["新增用户", "新增订单"], left: "center", textStyle: { color: "#fff" } },
-  grid: { left: "3%", right: "4%", bottom: "3%", containLabel: true },
-  xAxis: { type: "category", data: ["1月","2月","3月","4月","5月","6月"], axisLine: { lineStyle: { color: "#2a365f" } }, axisLabel: { color: "#a0b0d8" } },
-  yAxis: { type: "value", axisLine: { lineStyle: { color: "#2a365f" } }, axisLabel: { color: "#a0b0d8" } },
+// 趋势图
+const trend = echarts.init(document.getElementById('trend'));
+trend.setOption({
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['新增用户','新增订单'], left:'center' },
+  xAxis: { data: ['1月','2月','3月','4月','5月','6月'] },
+  yAxis: { type: 'value' },
   series: [
-    { name: "新增用户", type: "line", data: [30, 80, 120, 150, 190, 230], itemStyle: { color: "#0099ff" }, areaStyle: { color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1, colorStops: [{ offset: 0, color: 'rgba(0,153,255,0.3)' }, { offset: 1, color: 'rgba(0,153,255,0.1)' }] } } },
-    { name: "新增订单", type: "line", data: [25, 70, 100, 130, 170, 200], itemStyle: { color: "#00cc66" } }
+    { name:'新增用户', type:'line', data:[30,80,120,150,190,230], itemStyle:{color:'#0099ff'} },
+    { name:'新增订单', type:'line', data:[25,70,100,130,170,200], itemStyle:{color:'#00cc66'} }
   ]
-})
-// 2. 认养品类饼图（完全还原原图）
-const pieChart = echarts.init(document.getElementById("pieChart"))
-pieChart.setOption({
-  tooltip: { trigger: "item" },
-  legend: { orient: "vertical", left: "left", textStyle: { color: "#fff" } },
-  series: [{ type: "pie", radius: ["40%", "70%"], data: [
-    { name: "芦花鸡", value: 320, itemStyle: { color: "#0099ff" } },
-    { name: "土鹅", value: 150, itemStyle: { color: "#00cc66" } },
-    { name: "土鸭", value: 90, itemStyle: { color: "#ff9933" } },
-    { name: "其他", value: 26, itemStyle: { color: "#ff6666" } }
-  ]}]
-})
-// 3. 营收结构柱状图（完全还原原图）
-const incomeChart = echarts.init(document.getElementById("incomeChart"))
-incomeChart.setOption({
-  tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
-  legend: { data: ["基础认养营收", "增值服务营收", "品牌合作营收"], left: "center", textStyle: { color: "#fff" } },
-  grid: { left: "3%", right: "4%", bottom: "3%", containLabel: true },
-  xAxis: { type: "category", data: ["一季度", "二季度", "三季度", "四季度"], axisLine: { lineStyle: { color: "#2a365f" } }, axisLabel: { color: "#a0b0d8" } },
-  yAxis: { type: "value", axisLine: { lineStyle: { color: "#2a365f" } }, axisLabel: { color: "#a0b0d8" } },
+});
+
+// 饼图
+const pie = echarts.init(document.getElementById('pie'));
+pie.setOption({
+  tooltip: { trigger: 'item' },
+  series: [{
+    type: 'pie', radius: ['40%','70%'],
+    data: [
+      { value:320, name:'芦花鸡' },
+      { value:150, name:'土鹅' },
+      { value:90, name:'土鸭' },
+      { value:26, name:'其他' }
+    ]
+  }]
+});
+
+// 营收柱状图
+const income = echarts.init(document.getElementById('income'));
+income.setOption({
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['认养营收','增值服务','品牌合作'], left:'center' },
+  xAxis: { data: ['一季度','二季度','三季度','四季度'] },
+  yAxis: { type: 'value' },
   series: [
-    { name: "基础认养营收", type: "bar", data: [7500, 9800, 12000, 14500], itemStyle: { color: "#0099ff" } },
-    { name: "增值服务营收", type: "bar", data: [1800, 3200, 4500, 6200], itemStyle: { color: "#00cc66" } },
-    { name: "品牌合作营收", type: "bar", data: [1200, 2500, 3500, 4200], itemStyle: { color: "#ff9933" } }
+    { name:'认养营收', type:'bar', data:[7500,9800,12000,14500] },
+    { name:'增值服务', type:'bar', data:[1800,3200,4500,6200] },
+    { name:'品牌合作', type:'bar', data:[1200,2500,3500,4200] }
   ]
-})
-// 窗口自适应
-window.addEventListener('resize', () => { lineChart.resize(); pieChart.resize(); incomeChart.resize(); })
+});
 </script>
+
 </body>
 </html>
