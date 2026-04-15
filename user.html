@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用户大屏</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:#0a1a33;color:#fff;font-family:Microsoft YaHei}
+    .header{height:60px;background:#08142b;display:flex;justify-content:space-between;align-items:center;padding:0 20px;border-bottom:1px solid #1a2a4a}
+    .logo{font-size:20px;font-weight:700;color:#00ccff}
+    .role{font-size:12px;color:#999;margin-left:10px}
+    .user-info{font-size:14px;color:#ccc}
+    .container{display:flex}
+    .sidebar{width:180px;background:#08142b;height:calc(100vh - 60px);border-right:1px solid #1a2a4a;padding-top:10px}
+    .sidebar a{display:block;color:#ccc;padding:12px 20px;text-decoration:none;font-size:14px}
+    .sidebar a:hover{background:#14284a;color:#00ccff}
+    .main{flex:1;padding:20px}
+    .title{text-align:center;font-size:22px;color:#00ccff;margin-bottom:20px}
+    .section{background:#0f2040;border:1px solid #1a2a4a;border-radius:8px;padding:15px;margin-bottom:20px}
+    .section h2{font-size:16px;margin-bottom:15px;color:#fff}
+    .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:15px}
+    .card{background:#14284a;padding:20px;text-align:center;border-radius:8px}
+    .card .label{font-size:14px;color:#ccc;margin-bottom:8px}
+    .card .value{font-size:24px;font-weight:700;color:#00ccff}
+    .row{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+    .chart{width:100%;height:250px}
+    .imgs{display:grid;grid-template-columns:1fr 1fr;gap:10px;height:250px}
+    .imgs img{width:100%;height:100%;object-fit:cover;border-radius:4px;background:#14284a}
+    table{width:100%;border-collapse:collapse;background:#14284a}
+    th,td{border:1px solid #1a2a4a;padding:10px;text-align:center;font-size:13px}
+  </style>
+</head>
+<body>
+<div class="header">
+  <div><span class="logo">云宠牧场</span><span class="role">普通用户端</span></div>
+  <div class="user-info">体验用户（普通用户）</div>
+</div>
+<div class="container">
+  <div class="sidebar">
+    <a href="#">数据大屏看板</a>
+    <a href="#">24小时养殖监控</a>
+  </div>
+  <div class="main">
+    <h1 class="title">云宠牧场·全域智慧养殖运营监管大屏</h1>
+    <div class="section">
+      <h2>📊 核心运营指标总览</h2>
+      <div class="grid">
+        <div class="card"><div class="label">累计注册用户</div><div class="value">628</div></div>
+        <div class="card"><div class="label">累计认养订单</div><div class="value">586</div></div>
+        <div class="card"><div class="label">合作养殖农户</div><div class="value">5</div></div>
+        <div class="card"><div class="label">农户年均增收</div><div class="value">1.2W+</div></div>
+        <div class="card"><div class="label">平台总营收</div><div class="value">3.2W</div></div>
+        <div class="card"><div class="label">溯源图片审核量</div><div class="value">1286</div></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="section"><h2>📈 业务增长趋势分析</h2><div id="trend" class="chart"></div></div>
+      <div class="section"><h2>🥚 认养品类占比</h2><div id="pie" class="chart"></div></div>
+    </div>
+    <div class="row">
+      <div class="section"><h2>💰 营收结构分析</h2><div id="income" class="chart"></div></div>
+      <div class="section">
+        <h2>📷 全流程溯源实拍</h2>
+        <div class="imgs">
+          <img src="https://via.placeholder.com/300x200?text=养殖场景">
+          <img src="https://via.placeholder.com/300x200?text=鸡舍内部">
+          <img src="https://via.placeholder.com/300x200?text=鸡蛋分拣">
+          <img src="https://via.placeholder.com/300x200?text=人工分拣">
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <h2>📊 实时运营动态</h2>
+      <table>
+        <tr><th>时间</th><th>详情</th><th>类型</th></tr>
+        <tr><td>08:20</td><td>小程序新增注册用户12人，亲子用户占比65%</td><td>用户新增</td></tr>
+        <tr><td>09:15</td><td>合作农户自动上传当日养殖溯源实拍图26张</td><td>溯源监控</td></tr>
+        <tr><td>10:40</td><td>系统24小时不间断监控养殖场实况</td><td>实时监测</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+const trend=echarts.init(document.getElementById("trend"));
+trend.setOption({tooltip:{trigger:"axis"},legend:{data:["新增用户","新增订单"],left:"center"},xAxis:{data:["1月","2月","3月","4月","5月","6月"]},yAxis:{},series:[{name:"新增用户",type:"line",data:[30,80,120,150,190,230],itemStyle:{color:"#0099ff"}},{name:"新增订单",type:"line",data:[25,70,100,130,170,200],itemStyle:{color:"#00cc66"}}]});
+const pie=echarts.init(document.getElementById("pie"));
+pie.setOption({tooltip:{trigger:"item"},series:[{type:"pie",radius:["40%","70%"],data:[{value:320,name:"芦花鸡"},{value:150,name:"土鹅"},{value:90,name:"土鸭"},{value:26,name:"other"}]}]});
+const income=echarts.init(document.getElementById("income"));
+income.setOption({tooltip:{trigger:"axis"},legend:{data:["基础认养营收","增值服务营收","品牌合作营收"],left:"center"},xAxis:{data:["一季度","二季度","三季度","四季度"]},yAxis:{},series:[{name:"基础认养营收",type:"bar",data:[7500,9800,12000,14500]},{name:"增值服务营收",type:"bar",data:[1800,3200,4500,6200]},{name:"品牌合作营收",type:"bar",data:[1200,2500,3500,4200]}]});
+</script>
+</body>
+</html>
