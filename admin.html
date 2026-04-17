@@ -72,6 +72,24 @@
           <img src="https://via.placeholder.com/300x200?text=鸡蛋分拣">
           <img src="https://via.placeholder.com/300x200?text=人工分拣">
         </div>
+        <div style="display:flex;gap:10px;justify-content:center;">
+    <img id="img1" width="120" height="80" style="object-fit:cover;">
+    <img id="img2" width="120" height="80" style="object-fit:cover;">
+    <img id="img3" width="120" height="80" style="object-fit:cover;">
+    <img id="img4" width="120" height="80" style="object-fit:cover;">
+</div>
+
+<script>
+fetch("http://localhost:8080/api/screen/admin")
+.then(res => res.json())
+.then(data => {
+    let imgs = data.data.traceImages;
+    document.getElementById("img1").src = imgs[0];
+    document.getElementById("img2").src = imgs[1];
+    document.getElementById("img3").src = imgs[2];
+    document.getElementById("img4").src = imgs[3];
+})
+</script>
       </div>
     </div>
     <div class="section">
